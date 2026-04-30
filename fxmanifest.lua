@@ -5,7 +5,7 @@ lua54 'yes'
 author      'kitoake'
 name        'kt_hud'
 description 'Modular interaction system hud'
-version     '1.0.0'
+version     '1.1'
 
 shared_scripts {
     'shared/config.lua',
@@ -24,3 +24,7 @@ ui_page 'web/dist/index.html'
 files {
     'web/dist/**',
 }
+
+-- dependencies {
+--     'union',
+-- }

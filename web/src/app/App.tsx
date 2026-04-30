@@ -1,7 +1,7 @@
 // ============================================================
 // App — Bootstrap root
 // ============================================================
-import React from 'react';
+
 import { ThemeProvider } from '../providers/ThemeProvider';
 import { StoreProvider } from '../providers/StoreProvider';
 import { useNuiBridge } from '../core/bridge/nuiBridge';

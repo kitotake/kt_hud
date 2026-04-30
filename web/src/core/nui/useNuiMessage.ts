@@ -1,29 +1,36 @@
 // ============================================================
-// useNuiMessage — Listen to NUI messages sent from Lua client
+// useNuiMessage.ts — Écoute les messages NUI envoyés depuis Lua
 // ============================================================
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export type NuiMessageHandler<T = unknown> = (data: T) => void;
 
 /**
- * React hook to listen for NUI messages from Lua:
- *   SendNUIMessage({ action = "myAction", data = {...} })
- *
- * @param action   The action string to listen for
- * @param handler  Callback receiving the typed payload
+ * Hook React pour écouter les messages NUI envoyés depuis le client Lua
+ * Utilisation : SendNUIMessage({ action: "updateHud", data: {...} })
  */
 export function useNuiMessage<T = unknown>(
   action: string,
   handler: NuiMessageHandler<T>,
 ): void {
+  
+  // Référence stable du handler pour éviter les boucles infinies
+  const handlerRef = useRef(handler);
+  handlerRef.current = handler;
+
   useEffect(() => {
-    const listener = (event: MessageEvent<{ action: string; data: T }>) => {
-      if (event.data?.action === action) {
-        handler(event.data.data);
+    const listener = (event: MessageEvent) => {
+      const message = event.data as { action?: string; data?: T } | null;
+
+      if (message?.action === action) {
+        handlerRef.current(message.data as T);
       }
     };
 
     window.addEventListener('message', listener);
-    return () => window.removeEventListener('message', listener);
-  }, [action, handler]);
+
+    return () => {
+      window.removeEventListener('message', listener);
+    };
+  }, [action]);
 }
