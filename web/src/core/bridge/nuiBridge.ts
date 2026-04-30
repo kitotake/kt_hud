@@ -15,14 +15,7 @@ interface NuiMessage {
 const routeMap: Record<string, string> = {
   'updateHud':     UI_EVENTS.HUD_UPDATE,
   'updateVehicle': UI_EVENTS.VEHICLE_UPDATE,
-  'openMenu':      UI_EVENTS.MENU_OPEN,
-  'closeMenu':     UI_EVENTS.MENU_CLOSE,
-  'openInventory': UI_EVENTS.INVENTORY_OPEN,
-  'closeInventory':UI_EVENTS.INVENTORY_CLOSE,
-  'showTarget':    UI_EVENTS.TARGET_SHOW,
-  'hideTarget':    UI_EVENTS.TARGET_HIDE,
-  'updateUser':    UI_EVENTS.USER_UPDATE,
-  'notify':        UI_EVENTS.NOTIFY,
+
 };
 
 export function useNuiBridge(): void {

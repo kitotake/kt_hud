@@ -24,11 +24,6 @@ export default function App() {
         {/* Persistent HUD layer */}
         <Hud />
 
-        {/* Additional feature panels go here:
-            <Menu />
-            <Inventory />
-            <TargetSystem />
-        */}
       </StoreProvider>
     </ThemeProvider>
   );

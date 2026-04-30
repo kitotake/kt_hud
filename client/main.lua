@@ -77,14 +77,3 @@ RegisterCommand("togglehud", function()
     })
 end, false)
 
--- ── Notify helper ─────────────────────────────────────────────
-function SendNotify(message, notifType, duration)
-    SendNUIMessage({
-        action = "notify",
-        data   = {
-            message  = message,
-            type     = notifType or "info",
-            duration = duration or 3500
-        }
-    })
-end

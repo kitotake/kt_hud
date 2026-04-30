@@ -20,11 +20,5 @@ Config.Vehicle = {
     ShowSeatbelt   = false,
 }
 
--- ── Notifications ─────────────────────────────────────────────
-Config.Notify = {
-    DefaultDuration = 3500,
-    Position        = "bottom-right",
-}
-
 -- ── Framework (adjust for your setup) ────────────────────────
 Config.Framework = "union" -- "esx", "qbcore", "standalone"

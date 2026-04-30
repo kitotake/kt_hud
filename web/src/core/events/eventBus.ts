@@ -42,23 +42,6 @@ export const UI_EVENTS = {
   HUD_UPDATE:       'hud:update',
   VEHICLE_UPDATE:   'hud:vehicle',
 
-  // Menu
-  MENU_OPEN:        'menu:open',
-  MENU_CLOSE:       'menu:close',
-
-  // Inventory
-  INVENTORY_OPEN:   'inventory:open',
-  INVENTORY_CLOSE:  'inventory:close',
-
-  // Target
-  TARGET_SHOW:      'target:show',
-  TARGET_HIDE:      'target:hide',
-
-  // Notifications
-  NOTIFY:           'notify',
-
-  // User
-  USER_UPDATE:      'user:update',
 } as const;
 
 export type UIEventKey = typeof UI_EVENTS[keyof typeof UI_EVENTS];

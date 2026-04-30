@@ -23,8 +23,6 @@ interface UIState {
   // Active panels
   menuOpen: boolean;
   inventoryOpen: boolean;
-  setMenuOpen: (open: boolean) => void;
-  setInventoryOpen: (open: boolean) => void;
 
   // Any panel blocking cursor/input
   isAnyPanelOpen: () => boolean;
