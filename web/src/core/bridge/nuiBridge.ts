@@ -1,11 +1,6 @@
-// ============================================================
-// NUI Bridge — routes all window 'message' events to eventBus
-// Initialize once at app root
-// ============================================================
 import { useEffect } from 'react';
 import { eventBus, UI_EVENTS } from '../events/eventBus';
-import type { HudData, VehicleData } from '../../features/components/types';
-import type { UserData } from '../../features/user/types';
+import type { HudData, VehicleData } from '../../features/store/types';
 
 interface NuiMessage {
   action: string;
@@ -15,7 +10,6 @@ interface NuiMessage {
 const routeMap: Record<string, string> = {
   'updateHud':     UI_EVENTS.HUD_UPDATE,
   'updateVehicle': UI_EVENTS.VEHICLE_UPDATE,
-
 };
 
 export function useNuiBridge(): void {
@@ -23,20 +17,15 @@ export function useNuiBridge(): void {
     const handler = (event: MessageEvent<NuiMessage>) => {
       const { action, data } = event.data ?? {};
       const busEvent = routeMap[action];
-      if (busEvent) {
-        eventBus.emit(busEvent, data);
-      }
+      if (busEvent) eventBus.emit(busEvent, data);
     };
-
     window.addEventListener('message', handler);
     return () => window.removeEventListener('message', handler);
   }, []);
 }
 
-// Type-safe mock data injector for development
 export function injectMockNuiEvent(action: string, data: unknown): void {
   window.dispatchEvent(new MessageEvent('message', { data: { action, data } }));
 }
 
-// Re-export typed event data so consumers don't need to import types directly
-export type { HudData, VehicleData, UserData };
+export type { HudData, VehicleData };
