@@ -1,5 +1,5 @@
 // features/hooks/useHud.ts
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { useHudStore } from '../store/hudStore';
 import { eventBus, UI_EVENTS } from '../../core/events/eventBus';
 import type { HudData, VehicleData } from '../store/types';
@@ -32,27 +32,41 @@ export function useHudSync(): void {
     };
   }, [onHudUpdate, onVehicleUpdate]);
 
-  // ✅ Mock DEV séparé (évite les loops)
+  // ✅ Mock DEV animé (health + armor oscillent doucement)
   useEffect(() => {
-    if (import.meta.env.DEV) {
-      setVisible(true);
-      setHud({ 
-        health: 78, 
-        armor: 45, 
-        hunger: 60, 
-        thirst: 40 
-      });
-      setVehicle({ 
-        speed: 0, 
-        fuel: 72, 
-        inVehicle: false 
-      });
-    }
+    if (!import.meta.env.DEV) return;
+
+    setVisible(true);
+    setHud({
+      health: 78,
+      armor: 45,
+      hunger: 60,
+      thirst: 40,
+    });
+    setVehicle({
+      speed: 0,
+      fuel: 72,
+      inVehicle: false,
+    });
+
+    // Animated simulation: health & armor oscillate so dev can see bars move
+    let tick = 0;
+    const intervalId = setInterval(() => {
+      tick += 1;
+      const health = 50 + Math.round(Math.sin(tick * 0.08) * 40);          // 10–90
+      const armor  = 30 + Math.round(Math.cos(tick * 0.05) * 30);          // 0–60
+      const hunger = 60 + Math.round(Math.sin(tick * 0.03 + 1) * 30);      // 30–90
+      const thirst = 40 + Math.round(Math.cos(tick * 0.04 + 2) * 35);      // 5–75
+      setHud({ health, armor, hunger, thirst });
+    }, 800);
+
+    return () => clearInterval(intervalId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
 
 // ─────────────────────────────────────────────
-// HUD STATS (FIX PRINCIPAL)
+// HUD STATS
 // ─────────────────────────────────────────────
 export function useHudStats() {
   const health  = useHudStore((s) => s.health);

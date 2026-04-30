@@ -1,8 +1,9 @@
 // features/components/PlayerStats/PlayerStats.tsx
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { StatBar } from '../StatBar/StatBar';
 import { useHudStats } from '../../hooks/useHud';
+import { useHudStore } from '../../store/hudStore';
 import styles from './PlayerStats.module.scss';
 
 // ── Icons ─────────────────────────────────────
@@ -44,9 +45,51 @@ const itemVariants = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
 };
 
+const barVariants = {
+  hidden:  { opacity: 0, height: 0, marginTop: 0 },
+  visible: { opacity: 1, height: 'auto', marginTop: 0, transition: { duration: 0.25 } },
+  exit:    { opacity: 0, height: 0, transition: { duration: 0.2 } },
+};
+
+// ── Toggle Button ─────────────────────────────
+interface ToggleBtnProps {
+  active: boolean;
+  onClick: () => void;
+  label: string;
+  color: string;
+}
+
+const ToggleBtn: React.FC<ToggleBtnProps> = ({ active, onClick, label, color }) => (
+  <button
+    onClick={onClick}
+    style={{
+      background: active ? color : 'rgba(255,255,255,0.05)',
+      border: `1px solid ${active ? color : 'rgba(255,255,255,0.1)'}`,
+      color: active ? '#0a0a14' : 'rgba(255,255,255,0.4)',
+      borderRadius: '999px',
+      fontSize: '9px',
+      fontFamily: 'var(--font-display)',
+      fontWeight: 600,
+      letterSpacing: '0.1em',
+      textTransform: 'uppercase',
+      padding: '2px 8px',
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+      pointerEvents: 'auto',
+      lineHeight: 1.6,
+    }}
+  >
+    {label}
+  </button>
+);
+
 // ── Component ─────────────────────────────────
 export const PlayerStats: React.FC = () => {
   const { health, armor, hunger, thirst } = useHudStats();
+  const showHunger  = useHudStore((s) => s.showHunger);
+  const showThirst  = useHudStore((s) => s.showThirst);
+  const toggleHunger = useHudStore((s) => s.toggleHunger);
+  const toggleThirst = useHudStore((s) => s.toggleThirst);
 
   return (
     <motion.div
@@ -55,21 +98,63 @@ export const PlayerStats: React.FC = () => {
       initial="hidden"
       animate="visible"
     >
+      {/* Toggle row */}
+      <div style={{ display: 'flex', gap: '6px', marginBottom: '4px', flexWrap: 'wrap' }}>
+        <ToggleBtn
+          active={showHunger}
+          onClick={toggleHunger}
+          label="Hunger"
+          color="var(--hunger-color)"
+        />
+        <ToggleBtn
+          active={showThirst}
+          onClick={toggleThirst}
+          label="Thirst"
+          color="var(--thirst-color)"
+        />
+      </div>
+
+      {/* Health — always visible */}
       <motion.div variants={itemVariants}>
         <StatBar value={health} color="var(--health-color)" icon={<HeartIcon />} label="HEALTH" />
       </motion.div>
 
+      {/* Armor — always visible */}
       <motion.div variants={itemVariants}>
         <StatBar value={armor} color="var(--armor-color)" icon={<ShieldIcon />} label="ARMOR" />
       </motion.div>
 
-      <motion.div variants={itemVariants}>
-        <StatBar value={hunger} color="var(--hunger-color)" icon={<HamburgerIcon />} label="HUNGER" />
-      </motion.div>
+      {/* Hunger — togglable */}
+      <AnimatePresence initial={false}>
+        {showHunger && (
+          <motion.div
+            key="hunger"
+            variants={barVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            style={{ overflow: 'hidden' }}
+          >
+            <StatBar value={hunger} color="var(--hunger-color)" icon={<HamburgerIcon />} label="HUNGER" />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      <motion.div variants={itemVariants}>
-        <StatBar value={thirst} color="var(--thirst-color)" icon={<DropIcon />} label="THIRST" />
-      </motion.div>
+      {/* Thirst — togglable */}
+      <AnimatePresence initial={false}>
+        {showThirst && (
+          <motion.div
+            key="thirst"
+            variants={barVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            style={{ overflow: 'hidden' }}
+          >
+            <StatBar value={thirst} color="var(--thirst-color)" icon={<DropIcon />} label="THIRST" />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

@@ -10,6 +10,8 @@ Config.HUD = {
     ShowStress      = false,  -- show stress bar
     ShowOxygen      = false,  -- show oxygen bar
     ShowStamina     = true,   -- show stamina bar
+    ShowHunger      = true,   -- show hunger bar
+    ShowThirst      = true,   -- show thirst bar
 }
 
 -- ── Vehicle Settings ──────────────────────────────────────────
