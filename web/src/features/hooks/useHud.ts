@@ -4,12 +4,15 @@ import { useHudStore } from '../store/hudStore';
 import { eventBus, UI_EVENTS } from '../../core/events/eventBus';
 import type { HudData, VehicleData } from '../store/types';
 
+
+// ─────────────────────────────────────────────
+// Sync avec NUI / EventBus
+// ─────────────────────────────────────────────
 export function useHudSync(): void {
   const setHud     = useHudStore((s) => s.setHud);
   const setVehicle = useHudStore((s) => s.setVehicle);
   const setVisible = useHudStore((s) => s.setVisible);
 
-  // On stabilise les callbacks avec useCallback
   const onHudUpdate = useCallback((data: HudData) => {
     setHud(data);
   }, [setHud]);
@@ -18,11 +21,19 @@ export function useHudSync(): void {
     setVehicle(data);
   }, [setVehicle]);
 
+  // ✅ EventBus (stable)
   useEffect(() => {
     const unsubHud     = eventBus.on<HudData>(UI_EVENTS.HUD_UPDATE, onHudUpdate);
     const unsubVehicle = eventBus.on<VehicleData>(UI_EVENTS.VEHICLE_UPDATE, onVehicleUpdate);
 
-    // Mock data en développement
+    return () => {
+      unsubHud();
+      unsubVehicle();
+    };
+  }, [onHudUpdate, onVehicleUpdate]);
+
+  // ✅ Mock DEV séparé (évite les loops)
+  useEffect(() => {
     if (import.meta.env.DEV) {
       setVisible(true);
       setHud({ 
@@ -37,26 +48,26 @@ export function useHudSync(): void {
         inVehicle: false 
       });
     }
-
-    return () => {
-      unsubHud();
-      unsubVehicle();
-    };
-  }, [onHudUpdate, onVehicleUpdate]); 
-  // ⚠️ On retire setHud, setVehicle, setVisible des dépendances
+  }, []);
 }
 
+// ─────────────────────────────────────────────
+// HUD STATS (FIX PRINCIPAL)
+// ─────────────────────────────────────────────
 export function useHudStats() {
-  return useHudStore((s) => ({
-    health:  s.health,
-    armor:   s.armor,
-    hunger:  s.hunger,
-    thirst:  s.thirst,
-    stamina: s.stamina,
-    stress:  s.stress,
-  }));
+  const health  = useHudStore((s) => s.health);
+  const armor   = useHudStore((s) => s.armor);
+  const hunger  = useHudStore((s) => s.hunger);
+  const thirst  = useHudStore((s) => s.thirst);
+  const stamina = useHudStore((s) => s.stamina);
+  const stress  = useHudStore((s) => s.stress);
+
+  return { health, armor, hunger, thirst, stamina, stress };
 }
 
+// ─────────────────────────────────────────────
+// VEHICLE
+// ─────────────────────────────────────────────
 export function useVehicleStats() {
   return useHudStore((s) => s.vehicle);
 }

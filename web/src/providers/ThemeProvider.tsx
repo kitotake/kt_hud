@@ -1,6 +1,4 @@
-// ============================================================
-// ThemeProvider — applies theme CSS class to <html>
-// ============================================================
+// ThemeProvider.tsx
 import React, { useEffect, type ReactNode } from 'react';
 import { useUIStore } from '../app/store/uiStore';
 
@@ -13,15 +11,15 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   defaultTheme = 'dark',
 }) => {
-  const theme    = useUIStore((s) => s.theme);
+  const theme = useUIStore((s) => s.theme);
   const setTheme = useUIStore((s) => s.setTheme);
 
-  // Apply initial theme
+  // Appliquer le thème initial (une seule fois)
   useEffect(() => {
     setTheme(defaultTheme);
-  }, []);
+  }, [setTheme, defaultTheme]);     // On inclut setTheme pour éviter les warnings
 
-  // Sync theme attr on change
+  // Synchroniser l'attribut data-theme sur <html>
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
   }, [theme]);
