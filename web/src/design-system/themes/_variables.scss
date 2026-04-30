@@ -1,0 +1,125 @@
+@use '../tokens/colors' as *;
+@use '../tokens/spacing' as *;
+
+:root {
+  // ── Surfaces ─────────────────────────────────────
+  --bg-void:       #{$color-void};
+  --bg-surface-1:  #{$color-surface-1};
+  --bg-surface-2:  #{$color-surface-2};
+  --bg-surface-3:  #{$color-surface-3};
+  --bg-glass:      #{$color-glass-bg};
+
+  // ── Text ─────────────────────────────────────────
+  --text-primary:  #{$color-offwhite};
+  --text-secondary:#{$color-subtle};
+  --text-muted:    #{$color-muted};
+
+  // ── Borders ──────────────────────────────────────
+  --border-default:#{$color-glass-border};
+  --border-shine:  #{$color-glass-shine};
+
+  // ── Brand ────────────────────────────────────────
+  --accent-cyan:   #{$color-cyan};
+  --accent-violet: #{$color-violet};
+
+  // ── HUD stat colors ──────────────────────────────
+  --health-color:  #{$color-health};
+  --health-bg:     #{$color-health-bg};
+  --armor-color:   #{$color-armor};
+  --armor-bg:      #{$color-armor-bg};
+  --hunger-color:  #{$color-hunger};
+  --hunger-bg:     #{$color-hunger-bg};
+  --thirst-color:  #{$color-thirst};
+  --thirst-bg:     #{$color-thirst-bg};
+  --fuel-color:    #{$color-fuel};
+  --fuel-bg:       #{$color-fuel-bg};
+  --speed-color:   #{$color-cyan};
+  --speed-bg:      #{$color-cyan-glow};
+
+  // ── Spacing ──────────────────────────────────────
+  --space-1:  #{$space-1};
+  --space-2:  #{$space-2};
+  --space-3:  #{$space-3};
+  --space-4:  #{$space-4};
+  --space-5:  #{$space-5};
+  --space-6:  #{$space-6};
+  --space-8:  #{$space-8};
+
+  // ── Radius ───────────────────────────────────────
+  --radius-sm:   #{$radius-sm};
+  --radius-md:   #{$radius-md};
+  --radius-lg:   #{$radius-lg};
+  --radius-xl:   #{$radius-xl};
+  --radius-full: #{$radius-full};
+
+  // ── Transitions ──────────────────────────────────
+  --transition-fast:   #{$transition-fast};
+  --transition-normal: #{$transition-normal};
+  --transition-slow:   #{$transition-slow};
+  --transition-spring: #{$transition-spring};
+
+  // ── Typography ───────────────────────────────────
+  --font-display: #{$font-display};
+  --font-body:    #{$font-body};
+  --font-mono:    #{$font-mono};
+
+  // ── Z-index ──────────────────────────────────────
+  --z-hud:     #{$z-hud};
+  --z-overlay: #{$z-overlay};
+  --z-menu:    #{$z-menu};
+  --z-modal:   #{$z-modal};
+  --z-toast:   #{$z-toast};
+}
+
+// ── Light theme override (optional) ──────────────────────────
+[data-theme='light'] {
+  --bg-void:       #f0f0f5;
+  --bg-surface-1:  #ffffff;
+  --bg-surface-2:  #f5f5fa;
+  --bg-surface-3:  #eaeaf0;
+  --bg-glass:      rgba(255, 255, 255, 0.75);
+  --text-primary:  #1a1a2e;
+  --text-secondary:#4a4a6a;
+  --text-muted:    #8a8aaa;
+  --border-default:rgba(0, 0, 0, 0.08);
+}
+
+// ── Global Keyframes ─────────────────────────────────────────
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes barFill {
+  from { width: 0%; }
+  to   { width: var(--fill, 100%); }
+}

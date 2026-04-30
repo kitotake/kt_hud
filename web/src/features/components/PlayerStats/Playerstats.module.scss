@@ -1,0 +1,31 @@
+@use '../../../design-system/tokens/colors' as *;
+@use '../../../design-system/tokens/spacing' as *;
+@use '../../../design-system/mixins/mixins' as *;
+
+.playerStats {
+  @include glass;
+  @include flex-col;
+  gap: $space-3;
+  padding: $space-4 $space-5;
+  border-radius: $radius-xl;
+  width: 220px;
+  position: relative;
+  overflow: hidden;
+
+  // Left accent stripe
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: $space-4;
+    bottom: $space-4;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba($color-cyan, 0.5),
+      transparent
+    );
+    border-radius: $radius-full;
+  }
+}

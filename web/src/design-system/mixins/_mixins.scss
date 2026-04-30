@@ -1,0 +1,141 @@
+@use 'sass:math';
+@use '../tokens/colors' as *;
+@use '../tokens/spacing' as *;
+
+// ============================================================
+// GLASS MORPHISM
+// ============================================================
+@mixin glass($bg: $color-glass-bg, $blur: 16px, $border: $color-glass-border) {
+  background: $bg;
+  backdrop-filter: blur($blur) saturate(180%);
+  -webkit-backdrop-filter: blur($blur) saturate(180%);
+  border: 1px solid $border;
+}
+
+@mixin glass-shine {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.04) 0%,
+      transparent 50%
+    );
+    pointer-events: none;
+    border-radius: inherit;
+  }
+}
+
+// ============================================================
+// FLEX UTILS
+// ============================================================
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+// ============================================================
+// GLOW EFFECTS
+// ============================================================
+@mixin glow($color, $intensity: 0.5) {
+  box-shadow: 0 0 12px rgba($color, $intensity * 0.4),
+              0 0 32px rgba($color, $intensity * 0.15);
+}
+
+@mixin text-glow($color, $intensity: 0.8) {
+  text-shadow: 0 0 8px rgba($color, $intensity),
+               0 0 20px rgba($color, $intensity * 0.5);
+}
+
+// ============================================================
+// BAR / PROGRESS
+// ============================================================
+@mixin stat-bar($color, $bg) {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: $bg;
+  border-radius: $radius-full;
+  overflow: hidden;
+
+  &__fill {
+    height: 100%;
+    background: $color;
+    border-radius: $radius-full;
+    transition: width $transition-slow;
+    box-shadow: 0 0 8px rgba($color, 0.6);
+  }
+}
+
+// ============================================================
+// TRUNCATE
+// ============================================================
+@mixin truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// ============================================================
+// SCROLLBAR
+// ============================================================
+@mixin custom-scrollbar($color: $color-violet) {
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($color, 0.4);
+    border-radius: $radius-full;
+    &:hover { background: rgba($color, 0.7); }
+  }
+}
+
+// ============================================================
+// ANIMATIONS KEYFRAMES
+// ============================================================
+@mixin fade-in($duration: 0.3s, $delay: 0s) {
+  animation: fadeIn $duration ease forwards;
+  animation-delay: $delay;
+  opacity: 0;
+}
+
+@mixin slide-up($duration: 0.35s, $delay: 0s) {
+  animation: slideUp $duration cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: $delay;
+  opacity: 0;
+}
+
+@mixin pulse-glow($color) {
+  animation: pulseGlow 2s ease-in-out infinite;
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 6px rgba($color, 0.3); }
+    50%       { box-shadow: 0 0 18px rgba($color, 0.6); }
+  }
+}
+
+// ============================================================
+// RESPONSIVE
+// ============================================================
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  fhd: 1920px,
+);
+
+@mixin respond($bp) {
+  @media (min-width: map-get($breakpoints, $bp)) { @content; }
+}

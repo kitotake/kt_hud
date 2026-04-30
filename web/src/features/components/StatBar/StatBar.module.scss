@@ -1,0 +1,118 @@
+@use '../../../design-system/tokens/colors' as *;
+@use '../../../design-system/tokens/spacing' as *;
+@use '../../../design-system/mixins/mixins' as *;
+
+.statBar {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  width: 100%;
+
+  --stat-color: #{$color-cyan};
+  --fill-pct: 100%;
+}
+
+.icon {
+  @include flex-center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--stat-color);
+  opacity: 0.9;
+  font-size: 14px;
+  transition: opacity $transition-normal;
+
+  svg { width: 14px; height: 14px; }
+}
+
+.track {
+  flex: 1;
+  @include flex-col;
+  gap: 3px;
+}
+
+.meta {
+  @include flex-between;
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  letter-spacing: $letter-spacing-wider;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color $transition-normal;
+}
+
+.value {
+  font-family: var(--font-mono);
+  font-size: $font-size-xs;
+  color: var(--stat-color);
+  opacity: 0.85;
+}
+
+.bar {
+  width: 100%;
+  height: 3px;
+  background: rgba(var(--stat-color-rgb, 255 255 255), 0.1);
+  background: color-mix(in srgb, var(--stat-color) 12%, transparent);
+  border-radius: $radius-full;
+  overflow: hidden;
+  position: relative;
+}
+
+.fill {
+  height: 100%;
+  width: var(--fill-pct);
+  background: var(--stat-color);
+  border-radius: $radius-full;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px var(--stat-color);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--stat-color);
+    box-shadow: 0 0 6px var(--stat-color),
+                0 0 12px var(--stat-color);
+  }
+}
+
+// ── States ───────────────────────────────────────────────────
+.low {
+  .icon { opacity: 1; animation: iconPulse 1.5s ease-in-out infinite; }
+  .label { color: var(--stat-color); }
+  .fill { animation: barPulse 1.5s ease-in-out infinite; }
+}
+
+.med {
+  .label { color: var(--text-secondary); }
+}
+
+// ── Compact variant ──────────────────────────────────────────
+.compact {
+  gap: $space-1;
+
+  .icon { width: 16px; height: 16px; font-size: 11px; }
+  .bar  { height: 2px; }
+  .meta { display: none; }
+}
+
+// ── Animations ───────────────────────────────────────────────
+@keyframes iconPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.1); }
+}
+
+@keyframes barPulse {
+  0%, 100% { box-shadow: 0 0 4px var(--stat-color); }
+  50%       { box-shadow: 0 0 12px var(--stat-color), 0 0 20px var(--stat-color); }
+}

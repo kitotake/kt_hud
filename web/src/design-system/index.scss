@@ -1,0 +1,14 @@
+// ============================================================
+// DESIGN SYSTEM — kt_hud
+// Main entry point — import this in globals
+// ============================================================
+
+// 1. Tokens (no output, just SCSS vars)
+@forward 'tokens/colors';
+@forward 'tokens/spacing';
+
+// 2. Mixins (no output)
+@forward 'mixins/mixins';
+
+// 3. CSS custom properties + keyframes (generates output)
+@use 'themes/variables';

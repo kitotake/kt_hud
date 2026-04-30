@@ -1,0 +1,59 @@
+// ============================================================
+// COLOR TOKENS — kt_hud design system
+// ============================================================
+
+// Base palette
+$color-black:       #080810;
+$color-void:        #0a0a14;
+$color-surface-1:   #0f0f1e;
+$color-surface-2:   #141428;
+$color-surface-3:   #1a1a32;
+
+$color-white:       #ffffff;
+$color-offwhite:    #e8eaf2;
+$color-muted:       #6e7098;
+$color-subtle:      #9496b8;
+
+// Brand accents
+$color-cyan:        #00e5ff;
+$color-cyan-dim:    #00b8cc;
+$color-cyan-glow:   rgba(0, 229, 255, 0.15);
+
+$color-violet:      #8b5cf6;
+$color-violet-dim:  #6d3fd4;
+$color-violet-glow: rgba(139, 92, 246, 0.15);
+
+// Semantic — HUD
+$color-health:      #ff4d6d;
+$color-health-bg:   rgba(255, 77, 109, 0.12);
+$color-health-glow: rgba(255, 77, 109, 0.25);
+
+$color-armor:       #4db8ff;
+$color-armor-bg:    rgba(77, 184, 255, 0.12);
+$color-armor-glow:  rgba(77, 184, 255, 0.25);
+
+$color-hunger:      #ff9f43;
+$color-hunger-bg:   rgba(255, 159, 67, 0.12);
+$color-hunger-glow: rgba(255, 159, 67, 0.25);
+
+$color-thirst:      #48dbfb;
+$color-thirst-bg:   rgba(72, 219, 251, 0.12);
+$color-thirst-glow: rgba(72, 219, 251, 0.25);
+
+$color-fuel:        #ffd32a;
+$color-fuel-bg:     rgba(255, 211, 42, 0.12);
+$color-fuel-glow:   rgba(255, 211, 42, 0.25);
+
+$color-speed:       $color-cyan;
+$color-speed-bg:    $color-cyan-glow;
+
+// Status colors
+$color-success:     #2ecc71;
+$color-warning:     #f39c12;
+$color-danger:      #e74c3c;
+$color-info:        $color-cyan;
+
+// Glass
+$color-glass-bg:    rgba(14, 14, 30, 0.72);
+$color-glass-border:rgba(255, 255, 255, 0.06);
+$color-glass-shine: rgba(255, 255, 255, 0.03);

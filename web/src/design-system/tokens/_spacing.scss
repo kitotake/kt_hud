@@ -1,0 +1,73 @@
+// ============================================================
+// SPACING TOKENS
+// ============================================================
+$space-1:  4px;
+$space-2:  8px;
+$space-3:  12px;
+$space-4:  16px;
+$space-5:  20px;
+$space-6:  24px;
+$space-8:  32px;
+$space-10: 40px;
+$space-12: 48px;
+$space-16: 64px;
+
+// ============================================================
+// TYPOGRAPHY TOKENS
+// ============================================================
+$font-display: 'Rajdhani', 'Barlow Condensed', sans-serif;
+$font-body:    'DM Sans', 'Nunito', sans-serif;
+$font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+$font-size-xs:  10px;
+$font-size-sm:  12px;
+$font-size-md:  14px;
+$font-size-lg:  16px;
+$font-size-xl:  20px;
+$font-size-2xl: 24px;
+$font-size-3xl: 32px;
+$font-size-4xl: 48px;
+
+$font-weight-light:   300;
+$font-weight-normal:  400;
+$font-weight-medium:  500;
+$font-weight-semi:    600;
+$font-weight-bold:    700;
+
+$line-height-tight:  1.1;
+$line-height-normal: 1.4;
+$line-height-loose:  1.7;
+
+$letter-spacing-tight:  -0.03em;
+$letter-spacing-normal: 0em;
+$letter-spacing-wide:   0.05em;
+$letter-spacing-wider:  0.12em;
+
+// ============================================================
+// BORDER RADIUS
+// ============================================================
+$radius-sm:   4px;
+$radius-md:   8px;
+$radius-lg:   12px;
+$radius-xl:   16px;
+$radius-2xl:  24px;
+$radius-full: 9999px;
+
+// ============================================================
+// TRANSITIONS
+// ============================================================
+$transition-fast:   0.1s ease;
+$transition-normal: 0.2s ease;
+$transition-slow:   0.35s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-spring: 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// ============================================================
+// Z-INDEX LAYERS
+// ============================================================
+$z-base:    0;
+$z-hud:     10;
+$z-overlay: 20;
+$z-menu:    30;
+$z-modal:   40;
+$z-toast:   50;
+$z-cursor:  999;

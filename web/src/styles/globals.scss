@@ -1,0 +1,67 @@
+@use '../design-system/index';
+@use '../design-system/tokens/colors' as *;
+@use '../design-system/tokens/spacing' as *;
+
+// ── Google Fonts import ──────────────────────────────────────
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+// ── Reset ────────────────────────────────────────────────────
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Pointer events — NUI clicks only where needed
+body {
+  pointer-events: none;
+}
+
+// Allow clicks on interactive elements
+button, input, select, textarea, a, [role="button"], [data-interactive] {
+  pointer-events: auto;
+}
+
+// ── Typography base ──────────────────────────────────────────
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+code, pre {
+  font-family: var(--font-mono);
+}
+
+// ── Utility classes ──────────────────────────────────────────
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.pointer-events-auto { pointer-events: auto !important; }
+.pointer-events-none { pointer-events: none !important; }

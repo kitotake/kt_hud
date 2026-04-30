@@ -1,0 +1,76 @@
+@use '../../../design-system/tokens/colors' as *;
+@use '../../../design-system/tokens/spacing' as *;
+@use '../../../design-system/mixins/mixins' as *;
+
+.btn {
+  @include flex-center;
+  gap: $space-2;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: $font-weight-semi;
+  letter-spacing: $letter-spacing-wide;
+  text-transform: uppercase;
+  border-radius: $radius-md;
+  transition: all $transition-normal;
+  position: relative;
+  overflow: hidden;
+  pointer-events: auto;
+
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  &:not(:disabled):active { transform: scale(0.97); }
+}
+
+// ── Variants ─────────────────────────────────────────────────
+.primary {
+  background: linear-gradient(135deg, $color-violet, $color-violet-dim);
+  color: $color-white;
+  box-shadow: 0 4px 16px rgba($color-violet, 0.3);
+  &:not(:disabled):hover { box-shadow: 0 4px 24px rgba($color-violet, 0.5); }
+}
+
+.secondary {
+  @include glass;
+  color: var(--text-primary);
+  &:not(:disabled):hover { border-color: rgba(255,255,255,0.12); }
+}
+
+.ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  &:not(:disabled):hover {
+    background: rgba(255,255,255,0.05);
+    color: var(--text-primary);
+  }
+}
+
+.danger {
+  background: rgba($color-danger, 0.15);
+  border: 1px solid rgba($color-danger, 0.3);
+  color: $color-danger;
+  &:not(:disabled):hover { background: rgba($color-danger, 0.25); }
+}
+
+// ── Sizes ────────────────────────────────────────────────────
+.sm  { padding: $space-1 $space-3;  font-size: $font-size-xs; }
+.md  { padding: $space-2 $space-4;  font-size: $font-size-sm; }
+.lg  { padding: $space-3 $space-6;  font-size: $font-size-md; }
+
+// ── Spinner ──────────────────────────────────────────────────
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.icon {
+  @include flex-center;
+  font-size: 1em;
+}
+
+.loading .label { opacity: 0.5; }

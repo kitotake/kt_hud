@@ -1,0 +1,44 @@
+@use '../../design-system/tokens/spacing' as *;
+
+.hudRoot {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-hud);
+}
+
+.bottomLeft {
+  position: absolute;
+  bottom: $space-8;
+  left: $space-8;
+  pointer-events: auto;
+}
+
+.bottomCenter {
+  position: absolute;
+  bottom: $space-8;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: auto;
+}
+
+.bottomRight {
+  position: absolute;
+  bottom: $space-8;
+  right: $space-8;
+  pointer-events: auto;
+}
+
+.topLeft {
+  position: absolute;
+  top: $space-8;
+  left: $space-8;
+  pointer-events: auto;
+}
+
+.topRight {
+  position: absolute;
+  top: $space-8;
+  right: $space-8;
+  pointer-events: auto;
+}
