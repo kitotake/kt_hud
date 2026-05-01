@@ -1,3 +1,4 @@
+// web/src/core/bridge/nuiBridge.ts
 import { useEffect } from 'react';
 import { eventBus, UI_EVENTS } from '../events/eventBus';
 import type { HudData, VehicleData } from '../../features/store/types';
@@ -7,9 +8,12 @@ interface NuiMessage {
   data: unknown;
 }
 
+// Mapping action NUI → event interne du bus
+// "setVisible" est géré séparément car il touche directement le store
 const routeMap: Record<string, string> = {
-  'updateHud':     UI_EVENTS.HUD_UPDATE,
-  'updateVehicle': UI_EVENTS.VEHICLE_UPDATE,
+  updateHud:     UI_EVENTS.HUD_UPDATE,
+  updateVehicle: UI_EVENTS.VEHICLE_UPDATE,
+  setVisible:    UI_EVENTS.HUD_VISIBLE,
 };
 
 export function useNuiBridge(): void {

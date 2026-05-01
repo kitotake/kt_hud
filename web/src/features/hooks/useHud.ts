@@ -1,9 +1,8 @@
-// features/hooks/useHud.ts
-import { useEffect, useCallback, useRef } from 'react';
+// web/src/features/hooks/useHud.ts
+import { useEffect, useCallback } from 'react';
 import { useHudStore } from '../store/hudStore';
 import { eventBus, UI_EVENTS } from '../../core/events/eventBus';
 import type { HudData, VehicleData } from '../store/types';
-
 
 // ─────────────────────────────────────────────
 // Sync avec NUI / EventBus
@@ -13,54 +12,39 @@ export function useHudSync(): void {
   const setVehicle = useHudStore((s) => s.setVehicle);
   const setVisible = useHudStore((s) => s.setVisible);
 
-  const onHudUpdate = useCallback((data: HudData) => {
-    setHud(data);
-  }, [setHud]);
+  const onHudUpdate    = useCallback((data: HudData)              => setHud(data),              [setHud]);
+  const onVehicleUpdate = useCallback((data: VehicleData)         => setVehicle(data),           [setVehicle]);
+  const onSetVisible   = useCallback((d: { visible: boolean })    => setVisible(d?.visible ?? true), [setVisible]);
 
-  const onVehicleUpdate = useCallback((data: VehicleData) => {
-    setVehicle(data);
-  }, [setVehicle]);
-
-  // ✅ EventBus (stable)
   useEffect(() => {
-    const unsubHud     = eventBus.on<HudData>(UI_EVENTS.HUD_UPDATE, onHudUpdate);
-    const unsubVehicle = eventBus.on<VehicleData>(UI_EVENTS.VEHICLE_UPDATE, onVehicleUpdate);
+    const subs = [
+      eventBus.on<HudData>(UI_EVENTS.HUD_UPDATE,     onHudUpdate),
+      eventBus.on<VehicleData>(UI_EVENTS.VEHICLE_UPDATE, onVehicleUpdate),
+      eventBus.on<{ visible: boolean }>(UI_EVENTS.HUD_VISIBLE, onSetVisible), // ← corrigé
+    ];
+    return () => subs.forEach((unsub) => unsub());
+  }, [onHudUpdate, onVehicleUpdate, onSetVisible]);
 
-    return () => {
-      unsubHud();
-      unsubVehicle();
-    };
-  }, [onHudUpdate, onVehicleUpdate]);
-
-  // ✅ Mock DEV animé (health + armor oscillent doucement)
+  // Mock DEV animé
   useEffect(() => {
     if (!import.meta.env.DEV) return;
 
     setVisible(true);
-    setHud({
-      health: 78,
-      armor: 45,
-      hunger: 60,
-      thirst: 40,
-    });
-    setVehicle({
-      speed: 0,
-      fuel: 72,
-      inVehicle: false,
-    });
+    setHud({ health: 78, armor: 45, hunger: 60, thirst: 40 });
+    setVehicle({ speed: 0, fuel: 72, inVehicle: false });
 
-    // Animated simulation: health & armor oscillate so dev can see bars move
     let tick = 0;
-    const intervalId = setInterval(() => {
+    const id = setInterval(() => {
       tick += 1;
-      const health = 50 + Math.round(Math.sin(tick * 0.08) * 40);          // 10–90
-      const armor  = 30 + Math.round(Math.cos(tick * 0.05) * 30);          // 0–60
-      const hunger = 60 + Math.round(Math.sin(tick * 0.03 + 1) * 30);      // 30–90
-      const thirst = 40 + Math.round(Math.cos(tick * 0.04 + 2) * 35);      // 5–75
-      setHud({ health, armor, hunger, thirst });
+      setHud({
+        health: 50 + Math.round(Math.sin(tick * 0.08) * 40),
+        armor:  30 + Math.round(Math.cos(tick * 0.05) * 30),
+        hunger: 60 + Math.round(Math.sin(tick * 0.03 + 1) * 30),
+        thirst: 40 + Math.round(Math.cos(tick * 0.04 + 2) * 35),
+      });
     }, 800);
 
-    return () => clearInterval(intervalId);
+    return () => clearInterval(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
@@ -69,14 +53,14 @@ export function useHudSync(): void {
 // HUD STATS
 // ─────────────────────────────────────────────
 export function useHudStats() {
-  const health  = useHudStore((s) => s.health);
-  const armor   = useHudStore((s) => s.armor);
-  const hunger  = useHudStore((s) => s.hunger);
-  const thirst  = useHudStore((s) => s.thirst);
-  const stamina = useHudStore((s) => s.stamina);
-  const stress  = useHudStore((s) => s.stress);
-
-  return { health, armor, hunger, thirst, stamina, stress };
+  return {
+    health:  useHudStore((s) => s.health),
+    armor:   useHudStore((s) => s.armor),
+    hunger:  useHudStore((s) => s.hunger),
+    thirst:  useHudStore((s) => s.thirst),
+    stamina: useHudStore((s) => s.stamina),
+    stress:  useHudStore((s) => s.stress),
+  };
 }
 
 // ─────────────────────────────────────────────

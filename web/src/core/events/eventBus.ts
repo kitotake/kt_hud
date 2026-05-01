@@ -1,3 +1,4 @@
+// web/src/core/events/eventBus.ts
 // ============================================================
 // Event Bus — lightweight pub/sub for internal UI events
 // ============================================================
@@ -12,8 +13,6 @@ class EventBus {
       this.listeners.set(event, new Set());
     }
     this.listeners.get(event)!.add(cb as EventCallback);
-
-    // Return unsubscribe function
     return () => this.off(event, cb as EventCallback);
   }
 
@@ -38,10 +37,9 @@ export const eventBus = new EventBus();
 
 // ── Typed event constants ────────────────────────────────────
 export const UI_EVENTS = {
-  // HUD
-  HUD_UPDATE:       'hud:update',
-  VEHICLE_UPDATE:   'hud:vehicle',
-
+  HUD_UPDATE:   'hud:update',
+  VEHICLE_UPDATE: 'hud:vehicle',
+  HUD_VISIBLE:  'hud:visible',   // ← ajouté pour l'action setVisible
 } as const;
 
 export type UIEventKey = typeof UI_EVENTS[keyof typeof UI_EVENTS];

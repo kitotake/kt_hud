@@ -5,7 +5,7 @@ lua54 'yes'
 author      'kitoake'
 name        'kt_hud'
 description 'Modular interaction system hud'
-version     '1.1'
+version     '1.2'
 
 shared_scripts {
     'shared/config.lua',

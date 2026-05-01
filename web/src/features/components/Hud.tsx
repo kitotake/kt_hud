@@ -10,9 +10,7 @@ import { useHudStore } from '../store/hudStore';
 import styles from './Hud.module.scss';
 
 export const Hud: React.FC = () => {
-  // Initialize NUI sync
   useHudSync();
-
   const visible = useHudStore((s) => s.visible);
 
   return (
@@ -25,12 +23,9 @@ export const Hud: React.FC = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}
         >
-          {/* Bottom-left: Player vital stats */}
           <div className={styles.bottomLeft}>
             <PlayerStats />
           </div>
-
-          {/* Bottom-center: Vehicle HUD */}
           <div className={styles.bottomCenter}>
             <VehicleHud />
           </div>
@@ -39,3 +34,5 @@ export const Hud: React.FC = () => {
     </AnimatePresence>
   );
 };
+
+export default Hud;

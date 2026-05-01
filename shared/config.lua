@@ -23,4 +23,4 @@ Config.Vehicle = {
 }
 
 -- ── Framework (adjust for your setup) ────────────────────────
-Config.Framework = "union" -- "esx", "qbcore", "standalone"
+Config.Framework = "union"

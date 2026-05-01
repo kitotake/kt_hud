@@ -7,10 +7,11 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    // CRITIQUE pour FiveM : tout dans un seul chunk
     rollupOptions: {
       output: {
-        // Évite les chunks séparés qui peuvent causer des problèmes dans FiveM
         manualChunks: undefined,
+        inlineDynamicImports: true,
       },
     },
   },

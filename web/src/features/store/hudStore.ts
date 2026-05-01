@@ -8,7 +8,6 @@ interface HudStore extends HudState {
   setHud: (data: Partial<HudData>) => void;
   setVehicle: (data: Partial<VehicleData>) => void;
   setVisible: (visible: boolean) => void;
-  // UI toggles
   showHunger: boolean;
   showThirst: boolean;
   toggleHunger: () => void;
@@ -26,7 +25,6 @@ const DEFAULT_VEHICLE: VehicleData = {
 };
 
 export const useHudStore = create<HudStore>((set) => ({
-  // Default HUD state
   health:  100,
   armor:   0,
   hunger:  100,
@@ -35,19 +33,15 @@ export const useHudStore = create<HudStore>((set) => ({
   oxygen:  100,
   stress:  0,
   vehicle: DEFAULT_VEHICLE,
+  // TOUJOURS visible par défaut — le Lua contrôle via setVisible
   visible: true,
 
-  // Visibility toggles for hunger & thirst
   showHunger: true,
   showThirst: true,
 
-  setHud: (data) => set((s) => ({ ...s, ...data })),
-
-  setVehicle: (data) =>
-    set((s) => ({ vehicle: { ...s.vehicle, ...data } })),
-
+  setHud:     (data) => set((s) => ({ ...s, ...data })),
+  setVehicle: (data) => set((s) => ({ vehicle: { ...s.vehicle, ...data } })),
   setVisible: (visible) => set({ visible }),
-
   toggleHunger: () => set((s) => ({ showHunger: !s.showHunger })),
   toggleThirst: () => set((s) => ({ showThirst: !s.showThirst })),
 }));

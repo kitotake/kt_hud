@@ -8,7 +8,7 @@ import { useNuiBridge } from '../core/bridge/nuiBridge';
 import { Hud } from '../features';
 import '../styles/globals.scss';
 
-// Initialize NUI bridge (listens to all window messages)
+// Initialise le bridge NUI (écoute tous les window.postMessage de FiveM)
 function NuiBridgeInit() {
   useNuiBridge();
   return null;
@@ -18,12 +18,8 @@ export default function App() {
   return (
     <ThemeProvider defaultTheme="dark">
       <StoreProvider>
-        {/* Wire all NUI messages to event bus */}
         <NuiBridgeInit />
-
-        {/* Persistent HUD layer */}
         <Hud />
-
       </StoreProvider>
     </ThemeProvider>
   );
