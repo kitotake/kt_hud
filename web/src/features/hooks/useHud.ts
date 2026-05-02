@@ -1,31 +1,19 @@
 // web/src/features/hooks/useHud.ts
-import { useEffect, useCallback } from 'react';
+// FIX: suppression de la double subscription.
+// StoreProvider gère déjà les subscriptions au bus.
+// useHudSync ne fait plus que le mock DEV.
+import { useEffect } from 'react';
 import { useHudStore } from '../store/hudStore';
-import { eventBus, UI_EVENTS } from '../../core/events/eventBus';
-import type { HudData, VehicleData } from '../store/types';
 
 // ─────────────────────────────────────────────
-// Sync avec NUI / EventBus
+// Sync DEV uniquement (les subscriptions réelles sont dans StoreProvider)
 // ─────────────────────────────────────────────
 export function useHudSync(): void {
   const setHud     = useHudStore((s) => s.setHud);
   const setVehicle = useHudStore((s) => s.setVehicle);
   const setVisible = useHudStore((s) => s.setVisible);
 
-  const onHudUpdate    = useCallback((data: HudData)              => setHud(data),              [setHud]);
-  const onVehicleUpdate = useCallback((data: VehicleData)         => setVehicle(data),           [setVehicle]);
-  const onSetVisible   = useCallback((d: { visible: boolean })    => setVisible(d?.visible ?? true), [setVisible]);
-
-  useEffect(() => {
-    const subs = [
-      eventBus.on<HudData>(UI_EVENTS.HUD_UPDATE,     onHudUpdate),
-      eventBus.on<VehicleData>(UI_EVENTS.VEHICLE_UPDATE, onVehicleUpdate),
-      eventBus.on<{ visible: boolean }>(UI_EVENTS.HUD_VISIBLE, onSetVisible), // ← corrigé
-    ];
-    return () => subs.forEach((unsub) => unsub());
-  }, [onHudUpdate, onVehicleUpdate, onSetVisible]);
-
-  // Mock DEV animé
+  // Mock animé en DEV uniquement
   useEffect(() => {
     if (!import.meta.env.DEV) return;
 
@@ -45,7 +33,7 @@ export function useHudSync(): void {
     }, 800);
 
     return () => clearInterval(id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
 

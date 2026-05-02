@@ -31,14 +31,26 @@ exports("GetPlayerStatus", function(source)
 end)
 
 -- ── EXEMPLES UTILISATION ───────────────────────────────────
+-- FIX: vérification de l'existence du resource 'union' avant d'appeler
+-- ses exports, pour éviter un crash si union n'est pas chargée.
 
-RegisterCommand("feed", function(source)
-    exports['union']:AddPlayerStat(source, "hunger", 50)
-    exports['union']:AddPlayerStat(source, "thirst", 30)
+RegisterCommand("feed", function(src)
+    local ok, err = pcall(function()
+        exports['union']:AddPlayerStat(src, "hunger", 50)
+        exports['union']:AddPlayerStat(src, "thirst", 30)
+    end)
+    if not ok then
+        print("^1[kt_hud] Erreur export union (feed): " .. tostring(err))
+    end
 end)
 
-RegisterCommand("stress", function(source)
-    exports['union']:AddPlayerStat(source, "stress", 20)
+RegisterCommand("stress", function(src)
+    local ok, err = pcall(function()
+        exports['union']:AddPlayerStat(src, "stress", 20)
+    end)
+    if not ok then
+        print("^1[kt_hud] Erreur export union (stress): " .. tostring(err))
+    end
 end)
 
 -- ── CLEANUP ────────────────────────────────────────────────

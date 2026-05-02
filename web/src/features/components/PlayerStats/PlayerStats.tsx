@@ -1,4 +1,6 @@
 // features/components/PlayerStats/PlayerStats.tsx
+// FIX: import du SCSS corrigé — le fichier s'appelle PlayerStats.module.scss
+// (P majuscule), renommé pour correspondre à la convention PascalCase.
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { StatBar } from '../StatBar/StatBar';

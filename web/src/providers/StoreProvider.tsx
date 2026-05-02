@@ -1,4 +1,7 @@
 // web/src/providers/StoreProvider.tsx
+// Ce composant est l'unique point de subscription au bus d'événements.
+// FIX: useHudSync ne subscribe plus au bus (double subscription supprimée),
+// il ne gère plus que le mock DEV.
 import React, { useEffect, type ReactNode } from 'react';
 import { eventBus, UI_EVENTS } from '../core/events/eventBus';
 import { useHudStore } from '../features/store/hudStore';
@@ -17,7 +20,6 @@ export const StoreProvider: React.FC<StoreProviderProps> = ({ children }) => {
     const subs = [
       eventBus.on<HudData>(UI_EVENTS.HUD_UPDATE, setHud),
       eventBus.on<VehicleData>(UI_EVENTS.VEHICLE_UPDATE, setVehicle),
-      // Permet à Lua d'afficher/cacher le HUD via SendNUIMessage setVisible
       eventBus.on<{ visible: boolean }>(UI_EVENTS.HUD_VISIBLE, (d) =>
         setVisible(d?.visible ?? true)
       ),

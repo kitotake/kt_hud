@@ -1,3 +1,5 @@
+// FIX: fichier renommé de Playerstats.module.scss → PlayerStats.module.scss
+// pour correspondre à l'import dans PlayerStats.tsx (Linux est case-sensitive)
 @use '../../../design-system/tokens/colors' as *;
 @use '../../../design-system/tokens/spacing' as *;
 @use '../../../design-system/mixins/mixins' as *;

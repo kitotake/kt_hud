@@ -1,4 +1,6 @@
 import { create } from 'zustand';
+// FIX: subscribeWithSelector importé depuis zustand/middleware (correct pour zustand v4/v5)
+// En zustand v5, subscribeWithSelector est dans zustand/middleware
 import { subscribeWithSelector } from 'zustand/middleware';
 
 export type Theme = 'dark' | 'light';
