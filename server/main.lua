@@ -1,6 +1,10 @@
--- ============================================================
--- server/main.lua — kt_hud (sync + logique union)
--- ============================================================
+-- kt_hud/server/main.lua
+-- FIX #4 : Suppression du RegisterNetEvent("union:status:sync") qui entrait
+--           en conflit avec le handler identique dans union/status/manager.lua.
+--           Les deux resources ne peuvent pas toutes les deux écouter cet event
+--           sans que l'une écrase l'autre selon l'ordre de chargement.
+--           kt_hud ne doit pas gérer les stats côté serveur — c'est le rôle
+--           de union/StatusManager. kt_hud se contente de lire via export.
 
 local PlayerStatus = {}
 
@@ -12,27 +16,23 @@ AddEventHandler("onResourceStart", function(res)
     end
 end)
 
--- ── SYNC CLIENT → SERVEUR ──────────────────────────────────
+-- FIX #4 : SUPPRIMÉ — RegisterNetEvent("union:status:sync") retiré.
+-- Ce handler dupliquait la logique de StatusManager dans union.
+-- Le PlayerStatus local n'était utilisé que par l'export GetPlayerStatus
+-- ci-dessous, qui est maintenant remplacé par une lecture du StatusManager.
 
-RegisterNetEvent("union:status:sync", function(status)
-    local src = source
-    if not status then return end
-
-    PlayerStatus[src] = status
-
-    print(("[kt_hud] Sync %s | H:%s T:%s S:%s")
-        :format(src, status.hunger, status.thirst, status.stress))
-end)
-
--- ── GET STATUS (EXPORT READY) ───────────────────────────────
+-- ── GET STATUS (via StatusManager si disponible) ────────────
 
 exports("GetPlayerStatus", function(source)
+    -- Priorité : StatusManager de union (source de vérité)
+    if StatusManager and StatusManager.cache then
+        return StatusManager.cache[source]
+    end
+    -- Fallback : cache local (ne devrait plus être utilisé)
     return PlayerStatus[source]
 end)
 
--- ── EXEMPLES UTILISATION ───────────────────────────────────
--- FIX: vérification de l'existence du resource 'union' avant d'appeler
--- ses exports, pour éviter un crash si union n'est pas chargée.
+-- ── COMMANDES ──────────────────────────────────────────────
 
 RegisterCommand("feed", function(src)
     local ok, err = pcall(function()
