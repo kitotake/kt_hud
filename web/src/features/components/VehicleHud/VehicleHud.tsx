@@ -46,7 +46,6 @@ export const VehicleHud: React.FC = () => {
 
           {/* Fuel */}
           <div className={styles.fuelBlock}>
-            {/* Fuel icon */}
             <svg className={clsx(styles.fuelIcon, { [styles.fuelIconLow]: fuelLow })} viewBox="0 0 24 24" fill="none">
               <path d="M3 22V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               <path d="M3 22h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -73,8 +72,8 @@ export const VehicleHud: React.FC = () => {
                 <div
                   key={i}
                   className={clsx(styles.rpmSegment, {
-                    [styles.rpmActive]:    (i + 1) * 10 <= rpmPct,
-                    [styles.rpmDanger]:   i >= 8,
+                    [styles.rpmActive]:  (i + 1) * 10 <= rpmPct,
+                    [styles.rpmDanger]:  i >= 8,
                   })}
                 />
               ))}

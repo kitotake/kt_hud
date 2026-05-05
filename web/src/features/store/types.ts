@@ -1,5 +1,6 @@
 // ============================================================
-// HUD — Types
+// HUD — Types (source de vérité unique)
+// core/index.ts re-exporte depuis ici
 // ============================================================
 
 export interface HudData {

@@ -1,10 +1,12 @@
 // ============================================================
 // App — Bootstrap root
+// FIX #15 : ErrorBoundary ajouté pour éviter un crash total du NUI
 // ============================================================
 
 import { ThemeProvider } from '../providers/ThemeProvider';
 import { StoreProvider } from '../providers/StoreProvider';
 import { useNuiBridge } from '../core/bridge/nuiBridge';
+import { ErrorBoundary } from '../shared/components/ErrorBoundary/ErrorBoundary';
 import { Hud } from '../features';
 import '../styles/globals.scss';
 
@@ -16,11 +18,13 @@ function NuiBridgeInit() {
 
 export default function App() {
   return (
-    <ThemeProvider defaultTheme="dark">
-      <StoreProvider>
-        <NuiBridgeInit />
-        <Hud />
-      </StoreProvider>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider defaultTheme="dark">
+        <StoreProvider>
+          <NuiBridgeInit />
+          <Hud />
+        </StoreProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }

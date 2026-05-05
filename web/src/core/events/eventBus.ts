@@ -35,11 +35,10 @@ class EventBus {
 
 export const eventBus = new EventBus();
 
-// ── Typed event constants ────────────────────────────────────
 export const UI_EVENTS = {
-  HUD_UPDATE:   'hud:update',
+  HUD_UPDATE:     'hud:update',
   VEHICLE_UPDATE: 'hud:vehicle',
-  HUD_VISIBLE:  'hud:visible',   // ← ajouté pour l'action setVisible
+  HUD_VISIBLE:    'hud:visible',
 } as const;
 
 export type UIEventKey = typeof UI_EVENTS[keyof typeof UI_EVENTS];

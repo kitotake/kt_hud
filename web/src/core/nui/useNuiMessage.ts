@@ -13,24 +13,18 @@ export function useNuiMessage<T = unknown>(
   action: string,
   handler: NuiMessageHandler<T>,
 ): void {
-  
-  // Référence stable du handler pour éviter les boucles infinies
   const handlerRef = useRef(handler);
   handlerRef.current = handler;
 
   useEffect(() => {
     const listener = (event: MessageEvent) => {
       const message = event.data as { action?: string; data?: T } | null;
-
       if (message?.action === action) {
         handlerRef.current(message.data as T);
       }
     };
 
     window.addEventListener('message', listener);
-
-    return () => {
-      window.removeEventListener('message', listener);
-    };
+    return () => window.removeEventListener('message', listener);
   }, [action]);
 }

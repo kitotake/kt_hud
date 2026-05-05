@@ -1,7 +1,5 @@
 // ============================================================
 // HUD — Root feature component
-// FIX: déplacé dans features/components/Hud/Hud.tsx pour correspondre
-// au barrel index.ts et à l'import dans features/index.ts
 // ============================================================
 import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';

@@ -1,5 +1,6 @@
 // ============================================================
 // SPACING TOKENS
+// FIX #10 : $space-17 renommé en $sidebar-offset (valeur sémantique)
 // ============================================================
 $space-1:  4px;
 $space-2:  8px;
@@ -11,7 +12,9 @@ $space-8:  32px;
 $space-10: 40px;
 $space-12: 48px;
 $space-16: 64px;
-$space-17: 280px;
+
+// Valeur spécifique — offset pour laisser place à la sidebar FiveM
+$sidebar-offset: 280px;
 
 // ============================================================
 // TYPOGRAPHY TOKENS

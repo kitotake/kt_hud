@@ -1,3 +1,5 @@
+// web/src/shared/components/Button/Button.tsx
+// FIX #9 : dossier renommé Bouton → Button (cohérence anglais + import paths)
 import React from 'react';
 import clsx from 'clsx';
 import styles from './Button.module.scss';

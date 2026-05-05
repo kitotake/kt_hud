@@ -1,21 +1,19 @@
 // web/src/features/hooks/useHud.ts
-// FIX: suppression de la double subscription.
-// StoreProvider gère déjà les subscriptions au bus.
-// useHudSync ne fait plus que le mock DEV.
+// FIX #7 : suppression du eslint-disable-next-line — on utilise getState()
+// pour les actions afin d'éviter les dépendances instables dans useEffect.
+// FIX #16 : setVisible(true) explicite en DEV pour simuler le comportement Lua.
 import { useEffect } from 'react';
 import { useHudStore } from '../store/hudStore';
 
 // ─────────────────────────────────────────────
-// Sync DEV uniquement (les subscriptions réelles sont dans StoreProvider)
+// Sync DEV uniquement
 // ─────────────────────────────────────────────
 export function useHudSync(): void {
-  const setHud     = useHudStore((s) => s.setHud);
-  const setVehicle = useHudStore((s) => s.setVehicle);
-  const setVisible = useHudStore((s) => s.setVisible);
-
-  // Mock animé en DEV uniquement
   useEffect(() => {
     if (!import.meta.env.DEV) return;
+
+    // FIX #16 : active le HUD immédiatement en DEV (simule le Lua)
+    const { setVisible, setHud, setVehicle } = useHudStore.getState();
 
     setVisible(true);
     setHud({ health: 78, armor: 45, hunger: 60, thirst: 40 });
@@ -24,7 +22,7 @@ export function useHudSync(): void {
     let tick = 0;
     const id = setInterval(() => {
       tick += 1;
-      setHud({
+      useHudStore.getState().setHud({
         health: 50 + Math.round(Math.sin(tick * 0.08) * 40),
         armor:  30 + Math.round(Math.cos(tick * 0.05) * 30),
         hunger: 60 + Math.round(Math.sin(tick * 0.03 + 1) * 30),
@@ -33,8 +31,7 @@ export function useHudSync(): void {
     }, 800);
 
     return () => clearInterval(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []); // tableau vide intentionnel — actions Zustand stables via getState()
 }
 
 // ─────────────────────────────────────────────

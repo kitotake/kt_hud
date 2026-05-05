@@ -1,11 +1,11 @@
 // features/components/PlayerStats/PlayerStats.tsx
-// FIX: import du SCSS corrigé — le fichier s'appelle PlayerStats.module.scss
-// (P majuscule), renommé pour correspondre à la convention PascalCase.
+// FIX #1 : import SCSS corrigé → PlayerStats.module.scss (P majuscule)
+// FIX #11 : showHunger / showThirst lus depuis useUIStore (plus hudStore)
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { StatBar } from '../StatBar/StatBar';
 import { useHudStats } from '../../hooks/useHud';
-import { useHudStore } from '../../store/hudStore';
+import { useUIStore } from '../../../app/store/uiStore';
 import styles from './PlayerStats.module.scss';
 
 // ── Icons ─────────────────────────────────────
@@ -88,10 +88,12 @@ const ToggleBtn: React.FC<ToggleBtnProps> = ({ active, onClick, label, color }) 
 // ── Component ─────────────────────────────────
 export const PlayerStats: React.FC = () => {
   const { health, armor, hunger, thirst } = useHudStats();
-  const showHunger  = useHudStore((s) => s.showHunger);
-  const showThirst  = useHudStore((s) => s.showThirst);
-  const toggleHunger = useHudStore((s) => s.toggleHunger);
-  const toggleThirst = useHudStore((s) => s.toggleThirst);
+
+  // FIX #11 : préférences UI lues depuis uiStore
+  const showHunger   = useUIStore((s) => s.showHunger);
+  const showThirst   = useUIStore((s) => s.showThirst);
+  const toggleHunger = useUIStore((s) => s.toggleHunger);
+  const toggleThirst = useUIStore((s) => s.toggleThirst);
 
   return (
     <motion.div
