@@ -1,0 +1,120 @@
+\KT_HUD\WEB
+|   .gitignore
+|   eslint.config.js
+|   index.html
+|   package-lock.json
+|   package.json
+|   pnpm-lock.yaml
+|   README.md
+|   tsconfig.app.json
+|   tsconfig.json
+|   tsconfig.node.json
+|   vite.config.ts
+|   
++---dist
+|   |   favicon.svg
+|   |   icons.svg
+|   |   index.html
+|   |   
+|   \---assets
+|           index-BVrhnIFu.js
+|           index-VkDRvK7d.css
+|           
+|               
++---public
+|       favicon.svg
+|       icons.svg
+|       
+\---src
+    |   main.tsx
+    |   
+    +---app
+    |   |   App.tsx
+    |   |   
+    |   \---store
+    |           uiStore.ts
+    |           
+    +---assets
+    +---components
+    +---core
+    |   |   index.ts
+    |   |   
+    |   +---bridge
+    |   |       devTools.ts
+    |   |       nuiBridge.ts
+    |   |       
+    |   +---events
+    |   |       eventBus.ts
+    |   |       
+    |   \---nui
+    |           fetchNui.ts
+    |           useNuiMessage.ts
+    |           
+    +---data
+    +---design-system
+    |   |   index.scss
+    |   |   
+    |   +---mixins
+    |   |       _mixins.scss
+    |   |       
+    |   +---themes
+    |   |       _variables.scss
+    |   |       
+    |   \---tokens
+    |           _colors.scss
+    |           _spacing.scss
+    |           
+    +---features
+    |   |   index.ts
+    |   |   
+    |   +---components
+    |   |   |   index.ts
+    |   |   |   
+    |   |   +---Hud
+    |   |   |       Hud.module.scss
+    |   |   |       Hud.tsx
+    |   |   |       
+    |   |   +---PlayerStats
+    |   |   |       PlayerStats.module.scss
+    |   |   |       PlayerStats.tsx
+    |   |   |       VitalBar.module.scss
+    |   |   |       VitalBar.tsx
+    |   |   |       
+    |   |   +---StatBar
+    |   |   |       StatBar.module.scss
+    |   |   |       StatBar.tsx
+    |   |   |       
+    |   |   \---VehicleHud
+    |   |           VehicleHud.module.scss
+    |   |           VehicleHud.tsx
+    |   |           
+    |   +---hooks
+    |   |       useHud.ts
+    |   |       
+    |   \---store
+    |           hudStore.ts
+    |           types.ts
+    |           
+    +---hooks
+    +---providers
+    |       StoreProvider.tsx
+    |       ThemeProvider.tsx
+    |       
+    +---shared
+    |   +---components
+    |   |   |   index.ts
+    |   |   |   
+    |   |   +---Button
+    |   |   |       Button.module.scss
+    |   |   |       Button.tsx
+    |   |   |       
+    |   |   \---ErrorBoundary
+    |   |           ErrorBoundary.tsx
+    |   |           
+    |   \---types
+    |           index.ts
+    |           
+    +---styles
+    |       globals.scss
+    |       
+    \---types

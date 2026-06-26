@@ -7,11 +7,11 @@ Config = {}
 -- ── HUD Settings ─────────────────────────────────────────────
 Config.HUD = {
     UpdateInterval  = 500,    -- ms between HUD updates
-    ShowStress      = false,  -- show stress bar
+    ShowStress      = false,  -- retiré du HUD
     ShowOxygen      = false,  -- show oxygen bar
     ShowStamina     = true,   -- show stamina bar
-    ShowHunger      = true,   -- show hunger bar
-    ShowThirst      = true,   -- show thirst bar
+    ShowHunger      = false,  -- retiré du HUD
+    ShowThirst      = false,  -- retiré du HUD
 }
 
 -- ── Vehicle Settings ──────────────────────────────────────────

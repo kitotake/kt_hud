@@ -1,5 +1,5 @@
 // FIX #1: fichier renommé Playerstats.module.scss → PlayerStats.module.scss
-// (casse cohérente, Linux est case-sensitive)
+// MAJ : largeur/gap ajustés pour le nouveau visuel VitalBar (2 stats au lieu de 4)
 @use '../../../design-system/tokens/colors' as *;
 @use '../../../design-system/tokens/spacing' as *;
 @use '../../../design-system/mixins/mixins' as *;
@@ -7,14 +7,13 @@
 .playerStats {
   @include glass;
   @include flex-col;
-  gap: $space-3;
+  gap: $space-4;
   padding: $space-4 $space-5;
   border-radius: $radius-xl;
-  width: 220px;
+  width: 240px;
   position: relative;
   overflow: hidden;
 
-  // Left accent stripe
   &::after {
     content: '';
     position: absolute;
