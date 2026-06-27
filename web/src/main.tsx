@@ -1,22 +1,13 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './app/App';
+import { StrictMode }  from 'react';
+import { createRoot }  from 'react-dom/client';
+import App             from './App';
 
 const mount = () => {
-  const root = document.getElementById('root');
-  if (!root) {
-    console.error('[kt_hud] #root element not found');
-    return;
-  }
-  createRoot(root).render(
-    <StrictMode>
-      <App />
-    </StrictMode>,
-  );
+  const el = document.getElementById('root');
+  if (!el) { console.error('[kt_hud] #root manquant'); return; }
+  createRoot(el).render(<StrictMode><App /></StrictMode>);
 };
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', mount);
-} else {
-  mount();
-}
+document.readyState === 'loading'
+  ? document.addEventListener('DOMContentLoaded', mount)
+  : mount();

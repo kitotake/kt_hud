@@ -1,0 +1,26 @@
+@use '../styles/tokens' as *;
+
+.root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: $z-hud;
+}
+
+// Zone minimap FiveM native (bas gauche)
+.minimapZone {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 160px;
+  pointer-events: none;
+}
+
+// Véhicule centré en bas
+.vehicleZone {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: auto;
+}

@@ -4,23 +4,37 @@
 
 Config = {}
 
--- ── HUD Settings ─────────────────────────────────────────────
+-- ── HUD ──────────────────────────────────────────────────────
 Config.HUD = {
-    UpdateInterval  = 500,    -- ms between HUD updates
-    ShowStress      = false,  -- retiré du HUD
-    ShowOxygen      = false,  -- show oxygen bar
-    ShowStamina     = true,   -- show stamina bar
-    ShowHunger      = false,  -- retiré du HUD
-    ShowThirst      = false,  -- retiré du HUD
+    UpdateInterval = 500,   -- ms entre chaque update NUI
+    ShowArmor      = true,
 }
 
--- ── Vehicle Settings ──────────────────────────────────────────
+-- ── Minimap ───────────────────────────────────────────────────
+-- Shape  : "circle" → minimap ronde + barre en arc
+--          "square" → minimap carrée + barre droite
+--
+-- HideNativeElements : cache les barres HP/Armor/Arme/Cash
+--                      natifs de GTA sous la minimap
+Config.Minimap = {
+    Shape              = "circle",
+    HideNativeElements = true,
+
+    -- Composants HUD natifs à masquer (HideHudComponentThisFrame)
+    -- 1  = Vie joueur
+    -- 2  = Armure joueur
+    -- 6  = Véhicule (barre d'état moteur)
+    -- 7  = Cash
+    -- 8  = Nom de zone
+    -- 9  = Arme courante
+    -- 20 = Aide contextuelle
+    HideComponents = { 1, 2, 6, 7, 8, 9, 20 },
+}
+
+-- ── Véhicule ─────────────────────────────────────────────────
 Config.Vehicle = {
-    SpeedUnit      = "kmh",   -- "kmh" or "mph"
+    SpeedUnit      = "kmh",  -- "kmh" ou "mph"
     ShowRPM        = true,
     ShowGear       = true,
-    ShowSeatbelt   = false,
+    UpdateInterval = 100,    -- ms (plus rapide pour fluidité vitesse)
 }
-
--- ── Framework (adjust for your setup) ────────────────────────
-Config.Framework = "union"

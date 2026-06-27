@@ -1,0 +1,103 @@
+@use '../styles/tokens' as *;
+
+.wrap {
+  @include glass;
+  display: flex;
+  align-items: center;
+  gap: $gap-lg;
+  padding: $gap-md $gap-xl;
+  border-radius: $r-lg;
+  position: relative;
+  overflow: hidden;
+
+  // Liseré cyan en haut
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: $gap-xl; right: $gap-xl;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 229, 255, 0.4),
+      transparent
+    );
+  }
+}
+
+// ── Vitesse ──────────────────────────────────────────────────
+.speedBlock {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.speedVal {
+  font-family: var(--font-hud);
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--cyan);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.45);
+  min-width: 60px;
+  text-align: right;
+}
+
+.speedUnit {
+  font-family: var(--font-hud);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  padding-bottom: 4px;
+}
+
+// ── Séparateur ───────────────────────────────────────────────
+.sep {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  flex-shrink: 0;
+}
+
+// ── Fuel ─────────────────────────────────────────────────────
+.fuelBlock {
+  @include flex-col;
+  gap: 6px;
+  min-width: 80px;
+}
+
+.fuelTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--fuel);
+}
+
+.fuelPct {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.fuelTrack {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: $r-full;
+  overflow: hidden;
+}
+
+.fuelFill {
+  height: 100%;
+  border-radius: $r-full;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}

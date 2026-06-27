@@ -1,32 +1,33 @@
 // ============================================================
-// HUD — Root feature component
+// components/Hud.tsx — layout racine
 // ============================================================
 import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { PlayerStats } from '../PlayerStats/PlayerStats';
-import { VehicleHud } from '../VehicleHud/VehicleHud';
-import { useHudSync } from '../../hooks/useHud';
-import { useHudStore } from '../../store/hudStore';
+import { useHudStore } from '../store';
+import { MinimapBars } from './MinimapBars';
+import { VehicleHud }  from './VehicleHud';
 import styles from './Hud.module.scss';
 
 export const Hud: React.FC = () => {
-  useHudSync();
   const visible = useHudStore((s) => s.visible);
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          className={styles.hudRoot}
+          className={styles.root}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
+          exit={{    opacity: 0 }}
+          transition={{ duration: 0.35 }}
         >
-          <div className={styles.bottomLeft}>
-            <PlayerStats />
+          {/* Bas gauche — sur la minimap FiveM */}
+          <div className={styles.minimapZone}>
+            <MinimapBars />
           </div>
-          <div className={styles.bottomCenter}>
+
+          {/* Centre bas — véhicule */}
+          <div className={styles.vehicleZone}>
             <VehicleHud />
           </div>
         </motion.div>
@@ -34,5 +35,3 @@ export const Hud: React.FC = () => {
     </AnimatePresence>
   );
 };
-
-export default Hud;
