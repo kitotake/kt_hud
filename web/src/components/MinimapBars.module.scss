@@ -6,3 +6,19 @@
   pointer-events: none;
   overflow: visible;
 }
+
+// Masque circulaire appliqué par-dessus la minimap native
+// pour la forcer visuellement en cercle
+.circleClip {
+  position: absolute;
+  bottom: 20px;    // offset safe-area GTA
+  left: 6px;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  // Cache les coins de la minimap native carrée
+  box-shadow: 0 0 0 200px rgba(0,0,0,1);
+  pointer-events: none;
+  // La minimap native est SOUS le NUI — cette div crée un masque opaque
+  // autour du cercle pour cacher les coins carrés
+}

@@ -8,12 +8,15 @@
 }
 
 // Zone minimap FiveM native (bas gauche)
+// Dimensions exactes de la minimap GTA V native
 .minimapZone {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 160px;
+  width: 200px;   // couvre la minimap native (safe area incluse)
+  height: 200px;
   pointer-events: none;
+  overflow: visible;
 }
 
 // Véhicule centré en bas
